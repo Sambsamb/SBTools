@@ -1,0 +1,94 @@
+11 February 2020 12:42:19 PM: Validated AZ module
+11 February 2020 12:42:21 PM:     Connected to subscription Visual Studio Enterprise Subscription – MPN Id axxxxxe as Sam.xxxxx.com
+11 February 2020 12:42:25 PM: Now connected to subscription Visual Studio Enterprise Subscription – MPN Id axxxxxe as Sam.xxxxx.com
+11 February 2020 12:42:27 PM: Created/Validated Resource Group Picard_Hub_RG
+11 February 2020 12:42:27 PM: {
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vnetName": {
+            "type": "string",
+            "DefaultValue": "Picard_Hub_Vnet",
+        },
+        "location": {
+            "type": "string",
+            "DefaultValue": "centralus",
+        },
+        "resourceGroup": {
+            "type": "string",
+            "DefaultValue": "Picard_Hub_RG",
+        },
+        "vnetAddressPrefix": {
+            "type": "string",
+            "DefaultValue": "10.12.0.0/16",
+        },
+        "enableDdosProtection": {
+            "type": "bool",
+            "DefaultValue": false,
+        },
+        "subnet1Name": {
+            "type": "string",
+            "DefaultValue": "Hub_Gateway_Subnet",
+        },
+        "subnet1Prefix": {
+            "type": "string",
+            "DefaultValue": "10.12.0.0/27",
+        },
+        "subnet2Name": {
+            "type": "string",
+            "DefaultValue": "Hub_NVA_Subnet",
+        },
+        "subnet2Prefix": {
+            "type": "string",
+            "DefaultValue": "10.12.0.32/27",
+        },
+        "subnet3Name": {
+            "type": "string",
+            "DefaultValue": "Hub_Infra_Subnet",
+        },
+        "subnet3Prefix": {
+            "type": "string",
+            "DefaultValue": "10.12.0.64/27",
+        },
+    },
+    "resources": [
+        {
+            "apiVersion": "2019-09-01",
+            "name": "[parameters('vnetName')]",
+            "type": "Microsoft.Network/virtualNetworks",
+            "location": "[parameters('location')]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[parameters('vnetAddressPrefix')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "[parameters('subnet1Name')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('subnet1Prefix')]",
+                            "addressPrefixes": []
+                        }
+                    },
+                    {
+                        "name": "[parameters('subnet2Name')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('subnet2Prefix')]",
+                            "addressPrefixes": []
+                        }
+                    },
+                    {
+                        "name": "[parameters('subnet3Name')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('subnet3Prefix')]",
+                            "addressPrefixes": []
+                        }
+                    },
+                ],
+                "enableDdosProtection": "[parameters('enableDdosProtection')]"
+            }
+        }
+    ]
+}
+
